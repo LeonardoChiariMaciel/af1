@@ -1,0 +1,13 @@
+# Ambientes virtuais
+.venv/
+.venv_teste/
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Relatorios gerados a cada execucao (a amostra fica em exemplo/)
+relatorios/
+
+# Arquivos gerados pelo script de diagnostico
+yfinance_linhas_*.txt

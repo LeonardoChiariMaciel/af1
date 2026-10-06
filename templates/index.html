@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block faixa %}
+<section class="hero">
+  <div class="container">
+    <p class="selo">Projeto acadêmico</p>
+    <h1>Análise de Demonstrações Financeiras</h1>
+    <p>Aplicação acadêmica desenvolvida para a disciplina de Administração Financeira da UFMG.
+       Selecione uma empresa para analisar sua evolução financeira e compará-la com empresas
+       do mesmo setor.</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block conteudo %}
+<form id="form-analise" class="painel-selecao" method="post" action="{{ url_for('analisar') }}">
+  <h2>Escolha a empresa</h2>
+  <p class="meta">A empresa em destaque é a Localiza&amp;Co. Os dados são obtidos online no Yahoo Finance.</p>
+
+  {% if erro %}
+  <div class="erro" role="alert">
+    <p><strong>{{ erro.titulo }}</strong></p>
+    {% for linha in erro.linhas %}<p>{{ linha }}</p>{% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="campos">
+    <div class="campo">
+      <label for="setor">Setor</label>
+      <select id="setor" name="setor">
+        {% for setor in setores %}
+        <option value="{{ setor }}" {% if setor == setor_escolhido %}selected{% endif %}>{{ setor }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="ticker">Empresa</label>
+      <select id="ticker" name="ticker">
+        {% for setor, empresas in setores.items() %}
+          {% for ticker, nome in empresas %}
+          <option value="{{ ticker }}" data-setor="{{ setor }}"
+                  {% if ticker == ticker_escolhido %}selected{% endif %}>{{ nome }} &mdash; {{ ticker }}</option>
+          {% endfor %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <button id="botao-analisar" class="botao" type="submit">Analisar empresa</button>
+</form>
+
+<div class="passos">
+  <div class="passo">
+    <span class="passo-numero">01</span>
+    <h3>Captura dos dados</h3>
+    <p>Balanço patrimonial e DRE anuais da empresa e de suas concorrentes, obtidos no Yahoo Finance pela biblioteca yfinance.</p>
+  </div>
+  <div class="passo">
+    <span class="passo-numero">02</span>
+    <h3>Indicadores e comparação</h3>
+    <p>Doze indicadores de liquidez, endividamento, rentabilidade e atividade, comparados ao longo dos anos e à média dos pares.</p>
+  </div>
+  <div class="passo">
+    <span class="passo-numero">03</span>
+    <h3>Resultados e relatório</h3>
+    <p>Tabelas, gráficos e interpretação na tela, além de um relatório HTML autocontido para registro e entrega.</p>
+  </div>
+</div>
+
+<p class="ficha">
+  <strong>Projeto acadêmico.</strong> Os textos descrevem movimentos dos indicadores e não
+  constituem recomendação de investimento.
+</p>
+
+<div id="carregando" class="carregando" role="status" aria-live="polite">
+  <div class="carregando-caixa">
+    <h3>Analisando a empresa</h3>
+    <p class="meta">Aguarde, não feche esta página.</p>
+    <div class="barra-indeterminada"></div>
+    <ul id="etapas" class="etapas">
+      <li>Obtendo demonstrações financeiras...</li>
+      <li>Calculando indicadores...</li>
+      <li>Analisando empresas comparáveis...</li>
+      <li>Gerando gráficos e interpretação...</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

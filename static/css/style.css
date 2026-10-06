@@ -1,0 +1,408 @@
+/*
+ * style.css
+ *
+ * Folha de estilo ÚNICA do projeto. É usada de dois jeitos:
+ *   1) pela interface web local (templates/base.html faz o link);
+ *   2) pelo relatório HTML, que COPIA este arquivo para dentro de si
+ *      (relatorio.py), ficando autocontido e legível sem internet.
+ * Sem fontes externas, sem CDN, sem imagens externas.
+ *
+ * Identidade visual: preto, amarelo e branco; tipografia do sistema;
+ * poucos efeitos. Os valores de cor ficam em variáveis (:root).
+ */
+
+:root {
+  --preto: #0b0b0c;
+  --grafite: #1c1c1f;
+  --amarelo: #ffcb00;
+  --amarelo-escuro: #e0b100;
+  --amarelo-claro: #fff6cc;
+  --fundo: #f3f3f1;
+  --superficie: #ffffff;
+  --texto: #1a1a1c;
+  --texto-suave: #5c5c60;
+  --borda: #e2e2de;
+  --erro: #b3261e;
+  --erro-fundo: #fdeceb;
+  --raio: 8px;
+  --largura: 1120px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--texto);
+  background: var(--fundo);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 24px; }
+main.container { padding-top: 8px; padding-bottom: 56px; }
+
+h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 2.4rem; font-weight: 700; margin: 0 0 12px; }
+h2 { font-size: 1.45rem; font-weight: 700; margin: 0 0 18px; }
+h3 { font-size: 1.05rem; font-weight: 700; margin: 22px 0 8px; }
+p { margin: 8px 0; }
+li { margin-bottom: 8px; }
+code { background: #ececE8; padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+.meta { color: var(--texto-suave); font-size: 0.92rem; }
+
+/* ---------------- Barra superior ---------------- */
+.topo {
+  background: var(--preto);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid #2a2a2d;
+}
+.topo .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
+}
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.marca-simbolo {
+  width: 22px;
+  height: 22px;
+  background: var(--amarelo);
+  border-radius: 4px;
+  position: relative;
+}
+.marca-simbolo::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: 4px;
+  height: 8px;
+  background: var(--preto);
+  box-shadow: 6px -4px 0 var(--preto), 12px -8px 0 var(--preto);
+}
+.topo-info { color: #a9a9ae; font-size: 0.86rem; }
+
+/* ---------------- Faixa de destaque (hero) ---------------- */
+.hero { background: var(--preto); color: #fff; padding: 56px 0 96px; }
+.hero h1 { color: #fff; max-width: 760px; }
+.hero p { color: #c9c9ce; max-width: 680px; font-size: 1.08rem; }
+.selo {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 3px 10px;
+  background: var(--amarelo);
+  color: var(--preto) !important;
+  font-size: 0.74rem !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+.hero-meta { margin: 6px 0; font-size: 0.95rem !important; color: #b4b4b9 !important; }
+.hero-empresa { padding: 40px 0 36px; }
+.hero-empresa h1 { font-size: 2.2rem; margin-bottom: 8px; }
+.hero-relatorio { padding: 40px 0 36px; margin-bottom: 20px; }
+.ticker {
+  display: inline-block;
+  background: var(--amarelo);
+  color: var(--preto);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 1px 10px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+/* ---------------- Formulário (tela inicial) ---------------- */
+.painel-selecao {
+  background: var(--superficie);
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+  padding: 28px 32px 30px;
+  margin-top: -64px;
+  position: relative;
+}
+.painel-selecao h2 { margin-bottom: 4px; }
+.campos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 18px 0 22px; }
+.campo label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+select {
+  width: 100%;
+  font: inherit;
+  padding: 12px 14px;
+  border: 1px solid #c9c9c4;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--texto);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+select:hover { border-color: var(--preto); }
+select:focus { outline: none; border-color: var(--preto); box-shadow: 0 0 0 3px var(--amarelo); }
+
+.botao {
+  display: inline-block;
+  font: inherit;
+  font-weight: 700;
+  color: var(--preto);
+  background: var(--amarelo);
+  border: 2px solid var(--amarelo);
+  border-radius: 6px;
+  padding: 12px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+.botao:hover { background: var(--amarelo-escuro); border-color: var(--amarelo-escuro); }
+.botao:active { transform: translateY(1px); }
+.botao:focus-visible { outline: 3px solid var(--preto); outline-offset: 2px; }
+.botao:disabled { opacity: 0.6; cursor: wait; }
+.botao-secundario { background: transparent; color: #fff; border-color: #fff; }
+.botao-secundario:hover { background: #fff; border-color: #fff; color: var(--preto); }
+.acoes { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 22px; }
+
+/* ---------------- Como funciona ---------------- */
+.passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 44px 0 8px; }
+.passo { border-top: 3px solid var(--preto); padding-top: 14px; }
+.passo-numero { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; color: var(--texto-suave); }
+.passo h3 { margin: 4px 0 6px; font-size: 1.1rem; }
+.passo p { color: var(--texto-suave); font-size: 0.95rem; margin: 0; }
+.ficha {
+  margin-top: 36px;
+  padding: 18px 22px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--amarelo);
+  border-radius: var(--raio);
+  font-size: 0.93rem;
+  color: var(--texto-suave);
+}
+.ficha strong { color: var(--texto); }
+
+/* ---------------- Mensagens ---------------- */
+.erro {
+  background: var(--erro-fundo);
+  border: 1px solid #f0c4c1;
+  border-left: 4px solid var(--erro);
+  padding: 14px 18px;
+  margin: 0 0 20px;
+  border-radius: var(--raio);
+}
+.erro p { margin: 4px 0; }
+.aviso, .nota {
+  background: var(--amarelo-claro);
+  border-left: 4px solid var(--amarelo-escuro);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 0.93rem;
+  border-radius: 0 var(--raio) var(--raio) 0;
+}
+
+/* ---------------- Navegação da página de resultados ---------------- */
+.subnav {
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borda);
+  position: sticky;
+  top: 60px;
+  z-index: 15;
+}
+.subnav .container { display: flex; gap: 4px; overflow-x: auto; }
+.subnav a {
+  flex: none;
+  padding: 14px 16px;
+  color: var(--texto-suave);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.subnav a:hover { color: var(--preto); }
+.subnav a.ativo { color: var(--preto); border-bottom-color: var(--amarelo); }
+
+section.bloco { padding-top: 44px; scroll-margin-top: 120px; }
+section.bloco > h2 { display: flex; align-items: center; gap: 12px; }
+section.bloco > h2::before {
+  content: "";
+  width: 6px;
+  height: 1.2em;
+  background: var(--amarelo);
+  border-radius: 2px;
+}
+
+/* ---------------- Indicadores em destaque ---------------- */
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 30px; }
+.kpi {
+  color: var(--texto);   /* o hero é escuro e herda texto branco; o cartão é claro */
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.kpi-rotulo { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--texto-suave); }
+.kpi-valor { font-size: 1.9rem; font-weight: 700; line-height: 1.2; margin: 6px 0 4px; letter-spacing: -0.02em; }
+.kpi-valor.indisponivel { font-size: 1.15rem; color: #7b7b80; font-weight: 600; padding: 9px 0; }
+.kpi-nota { font-size: 0.84rem; color: var(--texto-suave); }
+
+/* ---------------- Resumo ---------------- */
+.resumo { background: var(--superficie); border: 1px solid var(--borda); border-radius: 10px; padding: 8px 28px 8px 48px; }
+.resumo li { margin: 14px 0; }
+.resumo li::marker { color: var(--amarelo-escuro); }
+
+/* ---------------- Tabela ---------------- */
+.tabela-rolagem { overflow-x: auto; border: 1px solid var(--borda); border-radius: 10px; background: var(--superficie); }
+table { border-collapse: collapse; width: 100%; font-size: 0.93rem; font-variant-numeric: tabular-nums; }
+th, td { padding: 11px 16px; text-align: right; border-bottom: 1px solid var(--borda); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: inherit; }
+thead th { background: var(--preto); color: #fff; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 0; }
+thead th:first-child { background: var(--preto); }
+tbody td:first-child { background: var(--superficie); font-weight: 500; }
+tbody tr:hover td { background: #fafaf7; }
+tr.linha-familia th {
+  text-align: left;
+  background: #f1f1ed;
+  color: var(--preto);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+}
+tr:last-child td { border-bottom: 0; }
+td.indisponivel { color: #8a8a8f; font-style: italic; }
+td.destaque { background: var(--amarelo-claro) !important; font-weight: 600; }
+td small { font-weight: 400; color: var(--texto-suave); }
+
+/* ---------------- Gráficos ---------------- */
+.abas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.aba {
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  background: var(--superficie);
+  color: var(--texto-suave);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.aba:hover { border-color: var(--preto); color: var(--preto); }
+.aba[aria-selected="true"] { background: var(--preto); color: #fff; border-color: var(--preto); }
+.aba:focus-visible { outline: 3px solid var(--amarelo); outline-offset: 2px; }
+
+figure { margin: 14px 0; background: var(--superficie); border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+figure img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+figcaption { color: var(--texto-suave); font-size: 0.85rem; margin-top: 8px; }
+figure.grafico.entrando { animation: entrar 0.25s ease-out; }
+@keyframes entrar { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------------- Comparação e interpretação ---------------- */
+.cartao-comparacao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 10px 28px 18px;
+}
+section.familia {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 4px 28px 14px;
+  margin-bottom: 16px;
+}
+section.familia h3 { font-size: 1.1rem; padding-top: 12px; margin-top: 8px; }
+section.familia ul { padding-left: 20px; }
+
+/* ---------------- Metodologia ---------------- */
+details {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 4px 28px;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 16px 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: "+"; font-size: 1.5rem; font-weight: 400; transition: transform 0.2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details[open] summary { border-bottom: 1px solid var(--borda); margin-bottom: 12px; }
+
+/* ---------------- Rodapé ---------------- */
+footer { margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--borda); color: var(--texto-suave); font-size: 0.88rem; }
+.rodape { background: var(--preto); color: #a9a9ae; margin-top: 64px; padding: 30px 0; font-size: 0.88rem; }
+.rodape p { margin: 4px 0; }
+.rodape strong { color: #fff; }
+
+/* ---------------- Tela de carregamento ---------------- */
+.carregando { position: fixed; inset: 0; background: rgba(11, 11, 12, 0.88); display: none; align-items: center; justify-content: center; z-index: 50; }
+.carregando.ativo { display: flex; animation: entrar 0.2s ease-out; }
+.carregando-caixa { background: var(--superficie); border-radius: 12px; padding: 30px 34px; width: min(440px, 92vw); }
+.carregando-caixa h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.barra-indeterminada { height: 4px; background: #ececE8; border-radius: 2px; overflow: hidden; margin: 18px 0 20px; }
+.barra-indeterminada::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 35%;
+  background: var(--amarelo);
+  animation: correr 1.2s ease-in-out infinite;
+}
+@keyframes correr { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.etapas { list-style: none; padding: 0; margin: 0; }
+.etapas li { display: flex; align-items: center; gap: 10px; color: #9a9aa0; margin: 8px 0; transition: color 0.2s; }
+.etapas li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #c9c9c4; flex: none; }
+.etapas li.feita { color: var(--texto-suave); }
+.etapas li.feita::before { background: var(--preto); border-color: var(--preto); }
+.etapas li.atual { color: var(--preto); font-weight: 600; }
+.etapas li.atual::before { background: var(--amarelo); border-color: var(--preto); }
+
+/* ---------------- Telas menores ---------------- */
+@media (max-width: 900px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .passos { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .container { padding: 0 16px; }
+  h1 { font-size: 1.7rem; }
+  .hero { padding: 36px 0 84px; }
+  .campos { grid-template-columns: 1fr; }
+  .painel-selecao { padding: 22px 18px; }
+  .kpis { grid-template-columns: 1fr; }
+  .topo-info { display: none; }
+  .resumo { padding: 4px 18px 4px 36px; }
+  section.familia, .cartao-comparacao, details { padding-left: 16px; padding-right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}

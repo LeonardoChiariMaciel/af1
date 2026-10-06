@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ empresa.nome }} | Análise de Demonstrações Financeiras{% endblock %}
+
+{# Os blocos em "secoes" são HTML já escapado, montado por relatorio.montar_secoes
+   (o mesmo conteúdo usado no relatório); por isso o filtro |safe. #}
+{% block faixa %}
+<section class="hero hero-empresa">
+  <div class="container">
+    <p class="selo">Análise de demonstrações financeiras</p>
+    <h1>{{ empresa.nome }}</h1>
+    <p class="hero-meta"><span class="ticker">{{ empresa.ticker }}</span> {{ empresa.setor }}</p>
+    <p class="hero-meta">Dados obtidos do Yahoo Finance (yfinance) | Última análise: {{ momento }}
+       | Anos analisados: {{ anos|join(", ") }}</p>
+
+    <div class="acoes">
+      <form method="post" action="{{ url_for('baixar_relatorio', id_analise=id_analise) }}">
+        <button class="botao" type="submit">Gerar relatório</button>
+      </form>
+      <a class="botao botao-secundario" href="{{ url_for('inicio') }}">Analisar outra empresa</a>
+    </div>
+
+    <div class="kpis">
+      {% for kpi in kpis %}
+      <div class="kpi">
+        <div class="kpi-rotulo">{{ kpi.rotulo }}</div>
+        <div class="kpi-valor{% if kpi.indisponivel %} indisponivel{% endif %}">{{ kpi.valor }}</div>
+        <div class="kpi-nota">{{ kpi.nota }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<nav class="subnav" aria-label="Seções da análise">
+  <div class="container">
+    <a href="#resumo">Resumo</a>
+    <a href="#indicadores">Indicadores</a>
+    <a href="#graficos">Evolução</a>
+    <a href="#comparacao">Setor</a>
+    <a href="#interpretacao">Interpretação</a>
+    <a href="#metodologia">Metodologia</a>
+  </div>
+</nav>
+{% endblock %}
+
+{% block conteudo %}
+<section id="resumo" class="bloco">
+  <h2>Resumo da análise</h2>
+  {{ secoes.resumo|safe }}
+</section>
+
+<section id="indicadores" class="bloco">
+  <h2>Indicadores financeiros por ano</h2>
+  {{ secoes.tabela|safe }}
+</section>
+
+<section id="graficos" class="bloco">
+  <h2>Evolução histórica</h2>
+  <div id="area-graficos">{{ secoes.graficos|safe }}</div>
+</section>
+
+<section id="comparacao" class="bloco">
+  <h2>Comparação com empresas do setor</h2>
+  {{ secoes.comparacao|safe }}
+</section>
+
+<section id="interpretacao" class="bloco">
+  <h2>Interpretação</h2>
+  {{ secoes.interpretacao|safe }}
+</section>
+
+<section id="metodologia" class="bloco">
+  <details>
+    <summary>Metodologia e limitações</summary>
+    {{ secoes.notas|safe }}
+  </details>
+  <p class="meta">O relatório é um arquivo HTML autocontido: é baixado pelo navegador e
+     também gravado na pasta <code>relatorios/</code> do projeto.</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

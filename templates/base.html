@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Análise de Demonstrações Financeiras{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topo">
+    <div class="container">
+      <a class="marca" href="{{ url_for('inicio') }}">
+        <span class="marca-simbolo" aria-hidden="true"></span>
+        <span>Análise de Demonstrações Financeiras</span>
+      </a>
+      <span class="topo-info">Administração Financeira (CAD 167) | UFMG</span>
+    </div>
+  </header>
+
+  {% block faixa %}{% endblock %}
+
+  <main class="container">
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p><strong>Disciplina:</strong> {{ disciplina }}</p>
+      <p><strong>Integrantes:</strong> {{ integrantes|join(", ") }}</p>
+      <p><strong>Fonte dos dados:</strong> {{ fonte }}</p>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
